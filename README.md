@@ -2,6 +2,7 @@
 
 ## Overview
 The **Asset Prices to Parquet** toolkit is a comprehensive solution for handling **historical** and **live** financial price data. It supports:
+
 - **Data Sources**: Alpaca API and Yahoo Finance (YFinance).
 - **Data Format**: Prices are stored in the efficient Parquet format.
 - **Functionality**:
@@ -13,6 +14,7 @@ This repository is ideal for **financial analysts**, **quantitative researchers*
 ---
 
 ## Features
+
 ### 1. Historical Data Management (`download_historical_price.py`)
 - **Sources**: Retrieves data from **Alpaca** and **Yahoo Finance**.
 - **Storage**: Saves adjusted close prices in `.parquet` format for easy and efficient use.
@@ -27,6 +29,7 @@ This repository is ideal for **financial analysts**, **quantitative researchers*
 ---
 
 ## Project Structure
+
 ```
 .
 ├── data/
@@ -35,18 +38,26 @@ This repository is ideal for **financial analysts**, **quantitative researchers*
 │   ├── logs/            # Logs for all operations
 │   ├── yfinance_invalid_symbols.txt
 │   └── alpaca_invalid_symbols.txt
-└── main.py              # Entry point script
+├── main.py              # Currently unused placeholder script.
+├── download_symbol.py   # Obsolete; replaced by `download_historical_price.py`.
+├── test_compare_parquet.py  # Compares Alpaca and YFinance Parquet files for a symbol.
+└── test_parquet_details.py  # Displays schema, head, and tail of Parquet files.
 ```
 
 ---
 
 ## Installation
+
 ### Prerequisites
+
 1. **Python Version**: Python 3.8 or later.
+
 2. **Dependencies**: Install required packages:
+
    ```bash
    pip install -r requirements.txt
    ```
+
    Key dependencies:
    - `alpaca-trade-api`
    - `yfinance`
@@ -56,6 +67,7 @@ This repository is ideal for **financial analysts**, **quantitative researchers*
 
 3. **Environment Variables**:
    Create a `.env` file with your Alpaca API credentials:
+
    ```
    ALPACA_API_KEY=<your_api_key>
    ALPACA_API_SECRET=<your_api_secret>
@@ -64,66 +76,79 @@ This repository is ideal for **financial analysts**, **quantitative researchers*
 ---
 
 ## Usage
+
 ### 1. Download Historical Data
+
 - **Initial Download**: Download data for all symbols:
-   ```bash
-   python download_historical_price.py --initial-download
-   ```
+  ```bash
+  python download_historical_price.py --initial-download
+  ```
 - **Update Specific Symbol**:
-   ```bash
-   python download_historical_price.py --symbol AAPL
-   ```
+  ```bash
+  python download_historical_price.py --symbol AAPL
+  ```
 
 ### 2. Update Live Prices
+
 - Start live price updates:
-   ```bash
-   python update_live_price.py
-   ```
+  ```bash
+  python update_live_price.py
+  ```
 
 ---
 
 ## Key Functions
+
 ### Comparison and Validation
+
 - Compare data files:
-   ```bash
-   python test2.py --symbol AAPL
-   ```
+  ```bash
+  python test_compare_parquet.py --symbol AAPL
+  ```
 - Display head, tail, and schema:
-   ```bash
-   python test_parquet.py --symbol AAPL
-   ```
+  ```bash
+  python test_parquet_details.py --symbol AAPL
+  ```
 
 ---
 
 ## Logging and Error Handling
+
 ### Logs
+
 All activities are logged in the `data/logs/` directory:
+
 - Successful operations
 - Skipped invalid symbols
 - Error reports
 
 ### Invalid Symbols
+
 Invalid symbols are saved in separate files (`yfinance_invalid_symbols.txt` and `alpaca_invalid_symbols.txt`).
 
 ---
 
 ## Contribution
+
 Contributions are welcome! Submit a pull request or create an issue to suggest improvements or report bugs.
 
 ---
 
 ## License
+
 This project is licensed under the MIT License.
 
 ---
 
 ## Acknowledgments
+
 - **Alpaca API** for trading and historical data.
 - **Yahoo Finance** for its accessible financial data service.
 
 ---
 
 ## GitHub Description
+
 **Comprehensive toolkit for saving historical and live financial price data from Alpaca and Yahoo Finance into Parquet files.**
 
 ---
