@@ -1,7 +1,9 @@
 # Asset Prices to Parquet - Price Data Saver
 
 ## Overview
-The **Asset Prices to Parquet** toolkit is a comprehensive solution for handling **historical** and **live** financial price data. It supports:
+The **Asset Prices to Parquet** toolkit is a comprehensive solution for handling **historical** and **live** financial price data.
+
+Robust backtesting is key to any quantitative strategy's success. Reliable historical and live data are essential for evaluating and refining your approach. Continuously querying APIs during development and testing can lead to slowdowns and increased costs. This program addresses these pain points by downloading symbol data from **Alpaca** and **Yahoo Finance** and storing it locally in the efficient **Parquet** format. By using local data files, you can test your strategies at scale without worrying about API limits, latency, or connectivity issues.
 
 - **Data Sources**: Alpaca API and Yahoo Finance (YFinance).
 - **Data Format**: Prices are stored in the efficient Parquet format.
