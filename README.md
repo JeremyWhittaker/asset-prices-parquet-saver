@@ -38,10 +38,10 @@ This repository is ideal for **financial analysts**, **quantitative researchers*
 │   ├── logs/            # Logs for all operations
 │   ├── yfinance_invalid_symbols.txt
 │   └── alpaca_invalid_symbols.txt
-├── main.py              # Currently unused placeholder script.
-├── download_symbol.py   # Obsolete; replaced by `download_historical_price.py`.
-├── test_compare_parquet.py  # Compares Alpaca and YFinance Parquet files for a symbol.
-└── test_parquet_details.py  # Displays schema, head, and tail of Parquet files.
+├── compare_parquet.py   # Compares Alpaca and YFinance Parquet files for a symbol.
+├── parquet_details.py   # Displays schema, head, and tail of Parquet files.
+└── download_historical_price.py  # Handles historical data downloads and updates.
+└── update_live_price.py  # Polls live prices and updates Parquet files.
 ```
 
 ---
@@ -103,11 +103,11 @@ This repository is ideal for **financial analysts**, **quantitative researchers*
 
 - Compare data files:
   ```bash
-  python test_compare_parquet.py --symbol AAPL
+  python compare_parquet.py --symbol AAPL
   ```
 - Display head, tail, and schema:
   ```bash
-  python test_parquet_details.py --symbol AAPL
+  python parquet_details.py --symbol AAPL
   ```
 
 ---
