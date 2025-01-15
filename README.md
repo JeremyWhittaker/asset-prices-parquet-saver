@@ -1,3 +1,4 @@
+
 # Asset Prices to Parquet - Price Data Saver
 
 ## Overview
@@ -10,6 +11,8 @@ Robust backtesting is key to any quantitative strategy's success. Reliable histo
 - **Functionality**:
   - Initial bulk downloads for historical data.
   - Real-time live price updates for active and tradable assets.
+  - Flexible symbol and data source selection.
+  - Parallel downloads with progress visualization using `tqdm`.
 
 This repository is ideal for **financial analysts**, **quantitative researchers**, and **algorithmic traders** seeking a robust price data management solution.
 
@@ -21,7 +24,14 @@ This repository is ideal for **financial analysts**, **quantitative researchers*
 - **Sources**: Retrieves data from **Alpaca** and **Yahoo Finance**.
 - **Storage**: Saves adjusted close prices in `.parquet` format for easy and efficient use.
 - **Invalid Symbol Handling**: Automatically identifies and skips invalid or delisted symbols.
+- **Flexible Symbol Fetching**:  
+  - Use `--symbols-source` to specify the symbol source (`alpaca` or `eodhd`).  
+  - By default, symbols are fetched from **EODHD** for a more comprehensive list.
+- **Flexible Data Download**:  
+  - Use `--data-source` to select which data to download (`all`, `alpaca`, or `yfinance`).  
+  - `all` downloads both sources in parallel, with progress bars using `tqdm`.
 - **Automatic Updates**: Supports scheduled updates for the entire dataset or specific symbols.
+- **Performance**: Parallel downloads with progress tracking using `tqdm` for faster initial data retrieval.
 
 ### 2. Live Data Management (`update_live_price.py`)
 - **Live Price Updates**: Retrieves the latest trade price from **Alpaca**.
@@ -42,7 +52,7 @@ This repository is ideal for **financial analysts**, **quantitative researchers*
 │   └── alpaca_invalid_symbols.txt
 ├── compare_parquet.py   # Compares Alpaca and YFinance Parquet files for a symbol.
 ├── parquet_details.py   # Displays schema, head, and tail of Parquet files.
-└── download_historical_price.py  # Handles historical data downloads and updates.
+├── download_historical_price.py  # Handles historical data downloads and updates.
 └── update_live_price.py  # Polls live prices and updates Parquet files.
 ```
 
@@ -66,13 +76,15 @@ This repository is ideal for **financial analysts**, **quantitative researchers*
    - `pandas`
    - `requests`
    - `python-dotenv`
+   - `tqdm`  (for progress bars)
 
 3. **Environment Variables**:
-   Create a `.env` file with your Alpaca API credentials:
+   Create a `.env` file with your API credentials:
 
-   ```
+   ```env
    ALPACA_API_KEY=<your_api_key>
    ALPACA_API_SECRET=<your_api_secret>
+   EODHD_API_KEY=<your_eodhd_api_key>  # If using EODHD for symbol fetching
    ```
 
 ---
@@ -81,18 +93,38 @@ This repository is ideal for **financial analysts**, **quantitative researchers*
 
 ### 1. Download Historical Data
 
-- **Initial Download**: Download data for all symbols:
+- **Initial Download (Default - Both Data Sources)**:  
+  Download data for all symbols from both Alpaca and YFinance, running in parallel with progress bars:  
   ```bash
   python download_historical_price.py --initial-download
   ```
-- **Update Specific Symbol**:
+
+- **Specifying Data Source**:  
+  Use `--data-source` to limit downloads to a specific source:  
+  - **Only Alpaca**:  
+    ```bash
+    python download_historical_price.py --initial-download --data-source alpaca
+    ```  
+  - **Only Yahoo Finance**:  
+    ```bash
+    python download_historical_price.py --initial-download --data-source yfinance
+    ```
+
+- **Specifying Symbol Source**:  
+  Use `--symbols-source` to specify how symbols are fetched (`alpaca` or `eodhd`). Example:  
+  ```bash
+  python download_historical_price.py --initial-download --symbols-source alpaca
+  ```
+
+- **Update Specific Symbol**:  
+  Update data for a single symbol (respecting the selected data source):  
   ```bash
   python download_historical_price.py --symbol AAPL
   ```
 
 ### 2. Update Live Prices
 
-- Start live price updates:
+- Start live price updates:  
   ```bash
   python update_live_price.py
   ```
@@ -103,11 +135,11 @@ This repository is ideal for **financial analysts**, **quantitative researchers*
 
 ### Comparison and Validation
 
-- Compare data files:
+- Compare data files:  
   ```bash
   python compare_parquet.py --symbol AAPL
   ```
-- Display head, tail, and schema:
+- Display head, tail, and schema:  
   ```bash
   python parquet_details.py --symbol AAPL
   ```
@@ -146,14 +178,11 @@ This project is licensed under the MIT License.
 
 - **Alpaca API** for trading and historical data.
 - **Yahoo Finance** for its accessible financial data service.
+- **EODHD** for providing a comprehensive symbols list.
+- **tqdm** for progress visualization.
 
 ---
 
 ## GitHub Description
 
-**Comprehensive toolkit for saving historical and live financial price data from Alpaca and Yahoo Finance into Parquet files.**
-
----
-
-Copy and paste this format directly into your GitHub `README.md` for a ready-to-use project description.
-
+**Comprehensive toolkit for saving historical and live financial price data from Alpaca and Yahoo Finance into Parquet files, featuring flexible data and symbol source selection, parallel downloads, and progress tracking.**
